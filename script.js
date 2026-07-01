@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://azure-production-f9b6.up.railway.app";
+
 const scriptInput = document.getElementById("scriptInput");
 const passwordInput = document.getElementById("passwordInput");
 const outputBox = document.getElementById("outputBox");
@@ -23,7 +25,7 @@ generateBtn.addEventListener("click", async () => {
   setStatus("Sending to backend...", "idle");
 
   try {
-    const response = await fetch("http://localhost:3000/api/convert", {
+    const response = await fetch(`${API_BASE_URL}/api/convert`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -8,6 +8,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const API_BASE_URL =
+  process.env.API_BASE_URL || "https://azure-production-f9b6.up.railway.app";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -60,7 +62,7 @@ app.post("/api/convert", async (req, res) => {
       throw error;
     }
 
-    const loadstring = `loadstring(game:HttpGet('http://localhost:${PORT}/raw/${scriptId}'))()`;
+    const loadstring = `loadstring(game:HttpGet('${API_BASE_URL}/raw/${scriptId}'))()`;
 
     return res.status(201).json({
       success: true,
@@ -104,5 +106,5 @@ app.get("/raw/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
