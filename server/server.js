@@ -7,7 +7,7 @@ const crypto = require("crypto");
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 const API_BASE_URL =
   process.env.API_BASE_URL || "https://azure-31yw.onrender.com";
 
@@ -109,6 +109,6 @@ app.get("/raw/:id", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Server is running on port ${port}`);
 });
