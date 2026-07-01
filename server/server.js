@@ -26,6 +26,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+  res.status(200).send("Server is running");
+});
+
 function generateScriptId(length = 6) {
   return crypto
     .randomBytes(length)
@@ -106,5 +110,5 @@ app.get("/raw/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
