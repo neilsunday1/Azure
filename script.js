@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://azure-31yw.onrender.com";
 
 const scriptInput = document.getElementById("scriptInput");
 const passwordInput = document.getElementById("passwordInput");
