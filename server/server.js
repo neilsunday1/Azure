@@ -16,6 +16,9 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const port = Number(process.env.PORT) || 10000;
 const publicPath = path.join(__dirname, "public");
 const API_BASE_URL =
@@ -33,11 +36,9 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.get("/raw/:id", async (req, res) => {
-  console.log("Route /raw/:id accessed");
+app.get("/api/raw/:id", async (req, res) => {
+  console.log("Route /api/raw/:id accessed");
   try {
     const { id } = req.params;
     console.log(`[raw] request received for id: ${id}`);
@@ -117,7 +118,7 @@ app.post("/api/convert", async (req, res) => {
       throw error;
     }
 
-    const loadstring = `loadstring(game:HttpGet('${API_BASE_URL}/raw/${scriptId}'))()`;
+    const loadstring = `loadstring(game:HttpGet('${API_BASE_URL}/api/raw/${scriptId}'))()`;
 
     return res.status(201).json({
       success: true,
