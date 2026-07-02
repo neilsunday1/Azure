@@ -138,6 +138,8 @@ app.post("/api/convert", async (req, res) => {
   }
 });
 
+app.use(express.static(publicPath));
+
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running on port ${port}`);
 });
