@@ -102,13 +102,17 @@ app.get("/raw/:id", async (req, res) => {
     }
 
     if (!data || !data.code) {
-      return res.status(404).type("text/plain").send("Script not found.");
+      res.setHeader("Content-Type", "text/plain");
+      return res.status(404).send("Script not found.");
     }
 
-    return res.type("text/plain").send(data.code);
+    const scriptContent = data.code;
+    res.setHeader("Content-Type", "text/plain");
+    return res.send(scriptContent);
   } catch (error) {
     console.error("Error fetching script:", error);
-    return res.status(500).type("text/plain").send("Failed to fetch script.");
+    res.setHeader("Content-Type", "text/plain");
+    return res.status(500).send("Failed to fetch script.");
   }
 });
 
