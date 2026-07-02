@@ -81,18 +81,6 @@ app.get("/api/raw/:id", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(publicPath, "index.html"));
-});
-
-app.get("/style.css", (req, res) => {
-  res.sendFile(path.join(publicPath, "style.css"));
-});
-
-app.get("/script.js", (req, res) => {
-  res.sendFile(path.join(publicPath, "script.js"));
-});
-
 function generateScriptId(length = 6) {
   return crypto
     .randomBytes(length)
@@ -145,6 +133,18 @@ app.post("/api/convert", async (req, res) => {
       error: error.message,
     });
   }
+});
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
+
+app.get("/style.css", (req, res) => {
+  res.sendFile(path.join(publicPath, "style.css"));
+});
+
+app.get("/script.js", (req, res) => {
+  res.sendFile(path.join(publicPath, "script.js"));
 });
 
 app.use(
