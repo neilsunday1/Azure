@@ -60,12 +60,13 @@ app.get("/api/raw/:id", async (req, res) => {
     });
 
     if (error) {
-      console.error("Supabase raw lookup error:", error);
+      console.error(`[raw] Supabase error for id ${id}:`, error);
       res.setHeader("Content-Type", "text/plain");
       return res.status(404).send("Script not found.");
     }
 
     if (!data || !data.code) {
+      console.log(`[raw] No data found for this ID: ${id}`);
       res.setHeader("Content-Type", "text/plain");
       return res.status(404).send("Script not found.");
     }
