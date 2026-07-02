@@ -84,6 +84,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));
 });
 
+app.get("/style.css", (req, res) => {
+  res.sendFile(path.join(publicPath, "style.css"));
+});
+
+app.get("/script.js", (req, res) => {
+  res.sendFile(path.join(publicPath, "script.js"));
+});
+
 function generateScriptId(length = 6) {
   return crypto
     .randomBytes(length)
@@ -138,7 +146,10 @@ app.post("/api/convert", async (req, res) => {
   }
 });
 
-app.use(express.static(publicPath));
+app.use(express.static(publicPath, {
+  index: false,
+  extensions: ["html", "css", "js"],
+}));
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running on port ${port}`);
