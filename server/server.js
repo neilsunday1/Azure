@@ -8,7 +8,8 @@ const crypto = require("crypto");
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 10000;
+const port = Number(process.env.PORT) || 10000;
+const publicPath = path.join(__dirname, "public");
 const API_BASE_URL =
   process.env.API_BASE_URL || "https://azure-31yw.onrender.com";
 
@@ -26,10 +27,10 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static(publicPath));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(publicPath, "index.html"));
 });
 
 function generateScriptId(length = 6) {

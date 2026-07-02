@@ -4,9 +4,71 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Roblox Script Loadstring Generator</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Roblox Script Loadstring Generator</h1>
-    <p>The frontend is being served from the public folder.</p>
+    <div class="page-glow"></div>
+
+    <div class="app-shell">
+      <header class="app-header">
+        <p class="eyebrow">Zero</p>
+        <h1>Roblox Script Loadstring Generator</h1>
+        <p class="subtitle">
+          Build a streamlined payload experience with a terminal-inspired
+          interface.
+        </p>
+      </header>
+
+      <main class="generator-card">
+        <section class="panel input-panel">
+          <div class="panel-heading">
+            <h2>Source Script</h2>
+            <span>Lua input</span>
+          </div>
+
+          <label class="sr-only" for="scriptInput">Lua script input</label>
+          <textarea
+            id="scriptInput"
+            placeholder="local message = 'hello world'&#10;print(message)"
+          ></textarea>
+
+          <div class="controls">
+            <div class="field-group">
+              <label for="passwordInput">Password</label>
+              <input
+                id="passwordInput"
+                type="password"
+                placeholder="Enter password"
+              />
+            </div>
+
+            <div class="button-row">
+              <button id="generateBtn" class="btn primary">Generate</button>
+              <button id="copyBtn" class="btn secondary">Copy</button>
+              <button id="resetBtn" class="btn ghost">Reset</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel output-panel">
+          <div class="panel-heading">
+            <h2>Loadstring Output</h2>
+            <span>Read-only</span>
+          </div>
+
+          <textarea
+            id="outputBox"
+            class="output-box"
+            aria-live="polite"
+            readonly
+            placeholder="Your generated loadstring will appear here."
+          ></textarea>
+
+          <div id="statusPill" class="status-pill" data-tone="idle">Idle</div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
   </body>
 </html>
