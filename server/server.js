@@ -19,6 +19,10 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/api/test", (req, res) => {
+  res.send("TEST SUCCESSFUL");
+});
+
 const port = Number(process.env.PORT) || 10000;
 const publicPath = path.join(__dirname, "public");
 const API_BASE_URL =
@@ -75,8 +79,6 @@ app.get("/api/raw/:id", async (req, res) => {
     return res.status(500).send("Failed to fetch script.");
   }
 });
-
-app.use(express.static(publicPath));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));
