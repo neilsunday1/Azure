@@ -27,6 +27,46 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get("/raw/:id", async (req, res) => {
+  console.log("Route /raw/:id accessed");
+  try {
+    const { id } = req.params;
+    console.log(`[raw] request received for id: ${id}`);
+
+    const { data, error } = await supabase
+      .from("scripts")
+      .select("code")
+      .eq("id", id)
+      .single();
+
+    console.log(`[raw] lookup result for id ${id}`, {
+      hasData: Boolean(data),
+      hasCode: Boolean(data?.code),
+      error: error?.message || null,
+    });
+
+    if (error) {
+      console.error("Supabase raw lookup error:", error);
+      res.setHeader("Content-Type", "text/plain");
+      return res.status(404).send("Script not found.");
+    }
+
+    if (!data || !data.code) {
+      res.setHeader("Content-Type", "text/plain");
+      return res.status(404).send("Script not found.");
+    }
+
+    const scriptContent = data.code;
+    res.setHeader("Content-Type", "text/plain");
+    return res.send(scriptContent);
+  } catch (error) {
+    console.error("Error fetching script:", error);
+    res.setHeader("Content-Type", "text/plain");
+    return res.status(500).send("Failed to fetch script.");
+  }
+});
+
 app.use(express.static(publicPath));
 
 app.get("/", (req, res) => {
@@ -84,44 +124,6 @@ app.post("/api/convert", async (req, res) => {
       message: "Failed to create script.",
       error: error.message,
     });
-  }
-});
-
-app.get("/raw/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    console.log(`[raw] request received for id: ${id}`);
-
-    const { data, error } = await supabase
-      .from("scripts")
-      .select("code")
-      .eq("id", id)
-      .single();
-
-    console.log(`[raw] lookup result for id ${id}`, {
-      hasData: Boolean(data),
-      hasCode: Boolean(data?.code),
-      error: error?.message || null,
-    });
-
-    if (error) {
-      console.error("Supabase raw lookup error:", error);
-      res.setHeader("Content-Type", "text/plain");
-      return res.status(404).send("Script not found.");
-    }
-
-    if (!data || !data.code) {
-      res.setHeader("Content-Type", "text/plain");
-      return res.status(404).send("Script not found.");
-    }
-
-    const scriptContent = data.code;
-    res.setHeader("Content-Type", "text/plain");
-    return res.send(scriptContent);
-  } catch (error) {
-    console.error("Error fetching script:", error);
-    res.setHeader("Content-Type", "text/plain");
-    return res.status(500).send("Failed to fetch script.");
   }
 });
 
