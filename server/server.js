@@ -90,15 +90,24 @@ app.post("/api/convert", async (req, res) => {
 app.get("/raw/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(`[raw] request received for id: ${id}`);
 
     const { data, error } = await supabase
       .from("scripts")
       .select("code")
       .eq("id", id)
-      .maybeSingle();
+      .single();
+
+    console.log(`[raw] lookup result for id ${id}`, {
+      hasData: Boolean(data),
+      hasCode: Boolean(data?.code),
+      error: error?.message || null,
+    });
 
     if (error) {
-      throw error;
+      console.error("Supabase raw lookup error:", error);
+      res.setHeader("Content-Type", "text/plain");
+      return res.status(404).send("Script not found.");
     }
 
     if (!data || !data.code) {
