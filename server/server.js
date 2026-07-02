@@ -8,6 +8,14 @@ const crypto = require("crypto");
 dotenv.config();
 
 const app = express();
+
+app.use((req, res, next) => {
+  console.log("--- New Request ---");
+  console.log("Method:", req.method);
+  console.log("Full URL:", req.originalUrl);
+  next();
+});
+
 const port = Number(process.env.PORT) || 10000;
 const publicPath = path.join(__dirname, "public");
 const API_BASE_URL =
@@ -23,11 +31,6 @@ if (!supabaseUrl || !supabaseKey) {
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey);
-
-app.use((req, res, next) => {
-  console.log("Global Request:", req.method, req.url);
-  next();
-});
 
 app.use(cors());
 app.use(express.json());
