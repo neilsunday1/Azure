@@ -1,6 +1,4 @@
-const API_BASE_URL = "https://azure-31yw.onrender.com";
-
-const scriptInput = document.getElementById("scriptInput");
+﻿const scriptInput = document.getElementById("scriptInput");
 const passwordInput = document.getElementById("passwordInput");
 const outputBox = document.getElementById("outputBox");
 const statusPill = document.getElementById("statusPill");
@@ -25,7 +23,7 @@ generateBtn.addEventListener("click", async () => {
   setStatus("Sending to backend...", "idle");
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/convert`, {
+    const response = await fetch("http://localhost:3000/api/convert", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
