@@ -23,7 +23,7 @@ generateBtn.addEventListener("click", async () => {
   setStatus("Sending to backend...", "idle");
 
   try {
-    const response = await fetch("http://localhost:3000/api/convert", {
+    const response = await fetch("/api/convert", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
